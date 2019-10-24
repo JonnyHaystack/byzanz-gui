@@ -9,12 +9,6 @@
 # DEPENDENCIES:   byzanz,zenity,notify-send,slop
 
 set -e
-
-# Time and date
-TIME=$(date +"%Y-%m-%d_%H%M%S")
- 
-# Standard screencast folder
-GIF_DIR="$HOME/Pictures/byzanz"
  
 # Sound notification to let one know when recording is about to start (and ends)
 beep() {
@@ -54,11 +48,20 @@ else
   SHOWCURSOR=
 fi
 
+
+# Time and date
+TIME=$(date +"%Y-%m-%d_%H%M%S")
+ 
+# Standard screencast folder
+GIF_DIR="$HOME/Pictures/byzanz"
+
+FILENAME="$GIF_DIR/GIFrecord_$TIME.gif"
+
 #Actual recording
 sleep $DELAY
 beep
-byzanz-record -v $SHOWCURSOR --delay=0 -d $DURATION -x $X -y $Y -w $W -h $H "$GIF_DIR/GIFrecord_$TIME.gif"
+byzanz-record -v $SHOWCURSOR --delay=0 -d $DURATION -x $X -y $Y -w $W -h $H "$FILENAME"
 beep
  
 # Notify the user of end of recording.
-notify-send "GIFRecorder" "Screencast saved to $GIF_DIR/GIFrecord_$TIME.gif"
+notify-send "GIFRecorder" "Screencast saved to $FILENAME"
